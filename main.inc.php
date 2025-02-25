@@ -138,10 +138,10 @@ function sharealbum_init()
 	  	if (pwg_db_num_rows($result))
 	  	{
 	  		$row = pwg_db_fetch_assoc($result);
-			if($row['user_id'] != $user['id']) {
-				logout_user();
-  				redirect(PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_AUTH]);
-			} else {
+			//if($row['user_id'] != $user['id']) {
+				//logout_user();
+  				//redirect(PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_AUTH]);
+			//} else {
 				$auto_login = false;
 				if ($conf['sharealbum']['option_remember_me']) {
 					$auto_login = true;
@@ -152,8 +152,8 @@ function sharealbum_init()
 						VALUES (".$row['cat'].", '".$_SERVER['REMOTE_ADDR']."', '".date("Y-m-d H:i:s")."')");
 				pwg_set_session_var(SHAREALBUM_SESSION_VAR, true);
 				pwg_set_session_var(SHAREALBUM_SESSION_CAT, $row['cat']);
-				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$row['cat']);
-			}
+				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$row['cat'].'&user='.$user['id'].'&user_id='.$row['user_id']);
+			//}
 	  	}
   	}
   }
