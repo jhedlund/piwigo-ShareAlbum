@@ -148,7 +148,7 @@ function sharealbum_init()
   					VALUES (".$row['cat'].", '".$_SERVER['REMOTE_ADDR']."', '".date("Y-m-d H:i:s")."')");
 			pwg_set_session_var(SHAREALBUM_SESSION_VAR, true);
 			pwg_set_session_var(SHAREALBUM_SESSION_CAT, $row['cat']);
-			redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$row['cat'].'&'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_AUTH]);
+			redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$row['cat']);
 	  	}
   	}
   }
