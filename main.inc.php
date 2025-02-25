@@ -138,6 +138,10 @@ function sharealbum_init()
 	  	if (pwg_db_num_rows($result))
 	  	{
 	  		$row = pwg_db_fetch_assoc($result);
+			if($row['user_id'] != $user['id']) {
+				logout_user();
+  				redirect(PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_AUTH]);
+			}
 	  		$auto_login = false;
 	  		if ($conf['sharealbum']['option_remember_me']) {
 	  			$auto_login = true;
