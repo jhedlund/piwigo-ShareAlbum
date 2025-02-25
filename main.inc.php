@@ -127,7 +127,7 @@ function sharealbum_init()
   	
   	if (!is_a_guest()) {
   		logout_user();
-  		redirect(PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_AUTH]);
+  		redirect(PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_AUTH].'&loggedout=1');
   	} else {
 	  	$result = pwg_query("
 					SELECT `cat`,`user_id`
