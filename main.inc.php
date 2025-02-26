@@ -163,7 +163,8 @@ function sharealbum_init()
 						FROM `".SHAREALBUM_TABLE."`
 						WHERE
 							`code` = '".$_GET[SHAREALBUM_URL_SHARE]."'"
-		if (pwg_db_num_rows($result))
+		);
+		if (pwg_db_num_rows($result)) 
 		{
 			$row = pwg_db_fetch_assoc($result);
 			if($row['user_id'] != $user['id']) {
