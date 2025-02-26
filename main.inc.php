@@ -38,6 +38,8 @@ define('SHAREALBUM_DIR',     PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'Share_Album/');
 define('SHAREALBUM_URL_AUTH', 'xauth'); 				// Shared album code identifier, used to trigger auto login feature for the album using this sharing key
 define('SHAREALBUM_KEY_LENGTH', 12);					// Length of the authentication key
 
+define('SHAREALBUM_URL_SHARE', 'xshr');
+
 define('SHAREALBUM_URL_ACTION','xact');					// URL attribute for actions handling
 define('SHAREALBUM_URL_ACTION_CREATE','activate');		// Action value for creating a new album share
 define('SHAREALBUM_URL_ACTION_CANCEL','cancel');		// Action value for cancelling an album share
@@ -149,9 +151,31 @@ function sharealbum_init()
 					VALUES (".$row['cat'].", '".$_SERVER['REMOTE_ADDR']."', '".date("Y-m-d H:i:s")."')");
 			pwg_set_session_var(SHAREALBUM_SESSION_VAR, true);
 			pwg_set_session_var(SHAREALBUM_SESSION_CAT, $row['cat']);
-			redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$row['cat']);
+			redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$row['cat']."&".SHAREALBUM_URL_SHARE."=".$_GET[SHAREALBUM_URL_AUTH]);
 	  	}
   	}
+  }
+  if (isset($_GET[SHAREALBUM_URL_SHARE])) {
+
+	if(!is_a_guest()) {
+		$result = pwg_query("
+						SELECT `cat`,`user_id`
+						FROM `".SHAREALBUM_TABLE."`
+						WHERE
+							`code` = '".$_GET[SHAREALBUM_URL_SHARE]."'"
+		if (pwg_db_num_rows($result))
+		{
+			$row = pwg_db_fetch_assoc($result);
+			if($row['user_id'] != $user['id']) {
+				logout_user();
+				/* better to stay on the shared page? */
+  				redirect(PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_SHARE]);
+			}
+		}
+	} else {
+		redirect(PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_SHARE]);
+	}
+
   }
   
   // An administrative action is detected
