@@ -169,7 +169,6 @@ function sharealbum_init()
 			$row = pwg_db_fetch_assoc($result);
 			if($row['user_id'] != $user['id']) {
 				logout_user();
-				/* better to stay on the shared page? */
   				redirect(PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_SHARE]);
 			}
 		}
