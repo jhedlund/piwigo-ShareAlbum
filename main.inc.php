@@ -157,7 +157,7 @@ function sharealbum_init()
   }
   if (isset($_GET[SHAREALBUM_URL_SHARE])) {
 
-	if(!is_a_guest()) {
+	if ( !is_a_guest()) {
 		$result = pwg_query("
 						SELECT `cat`,`user_id`
 						FROM `".SHAREALBUM_TABLE."`
